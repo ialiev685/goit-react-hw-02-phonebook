@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import Form from "./Form";
+
+import ContactForm from "./ContactForm";
+import ContactsList from "./ContactsList";
+import Section from "./Section";
+import Filter from "./Filter";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,37 +12,53 @@ class App extends Component {
     super(props);
     this.state = {
       contacts: [],
-      name: "",
+      filter: "",
     };
   }
 
-  handleChange = (e) => {
-    const value = e.target.value;
-    this.setState({ name: value });
-  };
-
-  addContact = (e) => {
-    e.preventDefault();
+  addContact = (newContact) => {
     const contact = {
       id: uuidv4(),
-      name: this.state.name,
+      ...newContact,
     };
-
-    this.setState({ name: "" });
 
     this.setState((prevState) => ({
       contacts: [contact, ...prevState.contacts],
     }));
   };
 
+  handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    this.setState({ [name]: value });
+  };
+
+  getFilterContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(({ name }) =>
+      name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
   render() {
-    const { name } = this.state;
+    const { name, number, filter } = this.state;
+    const sordList = this.getFilterContacts();
+
     return (
-      <Form
-        value={name}
-        onSubmit={this.addContact}
-        onChange={this.handleChange}
-      />
+      <Section>
+        <h1>Phonebook</h1>
+        <ContactForm
+          valueName={name}
+          valueNumber={number}
+          onSubmit={this.addContact}
+        />
+        <h2>Contacts</h2>
+        <Filter valueFilter={filter} onChange={this.handleChange} />
+        <ContactsList contacts={sordList} />
+      </Section>
     );
   }
 }
