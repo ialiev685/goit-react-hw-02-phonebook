@@ -17,6 +17,10 @@ class App extends Component {
   }
 
   addContact = (newContact) => {
+    if (this.checkDoubleName(newContact)) {
+      alert(`${newContact.name} уже есть в контактах.`);
+      return false;
+    }
     const contact = {
       id: uuidv4(),
       ...newContact,
@@ -27,11 +31,23 @@ class App extends Component {
     }));
   };
 
+  checkDoubleName = (newContact) => {
+    const { name } = newContact;
+    const normalizedName = name.toLowerCase();
+    const { contacts } = this.state;
+    return contacts.some(({ name }) => name.toLowerCase() === normalizedName);
+  };
+
+  deleteContact = (contactId) => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(({ id }) => id !== contactId),
+    }));
+  };
+
   handleChange = (e) => {
-    const name = e.target.name;
     const value = e.target.value;
 
-    this.setState({ [name]: value });
+    this.setState({ filter: value });
   };
 
   getFilterContacts = () => {
@@ -44,20 +60,16 @@ class App extends Component {
   };
 
   render() {
-    const { name, number, filter } = this.state;
+    const { filter } = this.state;
     const sordList = this.getFilterContacts();
 
     return (
       <Section>
         <h1>Phonebook</h1>
-        <ContactForm
-          valueName={name}
-          valueNumber={number}
-          onSubmit={this.addContact}
-        />
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter valueFilter={filter} onChange={this.handleChange} />
-        <ContactsList contacts={sordList} />
+        <ContactsList contacts={sordList} onDelete={this.deleteContact} />
       </Section>
     );
   }

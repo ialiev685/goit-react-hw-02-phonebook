@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
-class EditorContacts extends Component {
-  //{ name, number, onChange, onSubmit }
-
+class ContactForm extends Component {
   constructor(props) {
     super(props);
     this.state = { name: "", number: "" };
@@ -59,4 +57,4 @@ class EditorContacts extends Component {
   }
 }
 
-export default EditorContacts;
+export default ContactForm;
