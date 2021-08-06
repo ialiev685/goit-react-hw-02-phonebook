@@ -4,6 +4,7 @@ import ContactForm from "./ContactForm";
 import ContactsList from "./ContactsList";
 import Section from "./Section";
 import Filter from "./Filter";
+import "./App.scss";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -65,9 +66,9 @@ class App extends Component {
 
     return (
       <Section>
-        <h1>Phonebook</h1>
+        <h1 className="caption">Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
+        <h2 className="title">Contacts</h2>
         <Filter valueFilter={filter} onChange={this.handleChange} />
         <ContactsList contacts={sordList} onDelete={this.deleteContact} />
       </Section>

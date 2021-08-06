@@ -1,8 +1,17 @@
+import "./ContactItem.scss";
+
 const ContactItem = ({ name, number, onDelete, id }) => {
   return (
-    <li>
-      {name}: {number}{" "}
-      <input type="button" value="delete" onClick={() => onDelete(id)} />
+    <li className="contacts-list__item">
+      <span>
+        {name}: {number}
+      </span>
+      <input
+        className="contacts-list__button"
+        type="button"
+        value="delete"
+        onClick={() => onDelete(id)}
+      />
     </li>
   );
 };

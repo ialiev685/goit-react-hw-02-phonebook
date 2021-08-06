@@ -1,9 +1,10 @@
 import ContactItem from "../ContactItem";
+import "./ContactsList.scss";
 
 const ContactsList = ({ contacts, onDelete }) => {
   return (
     <div>
-      <ul>
+      <ul className="contacts-list">
         {contacts.map(({ id, name, number }) => (
           <ContactItem
             key={id}

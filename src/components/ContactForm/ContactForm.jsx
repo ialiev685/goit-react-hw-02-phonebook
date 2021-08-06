@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./ContactForm.scss";
 
 class ContactForm extends Component {
   constructor(props) {
@@ -24,10 +25,11 @@ class ContactForm extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name
+      <form onSubmit={this.handleSubmit} className="form-contacts">
+        <label className="form-contacts__input">
+          Name:
           <input
+            className="form-contacts__text"
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -38,9 +40,10 @@ class ContactForm extends Component {
             autoComplete="off"
           />
         </label>
-        <label>
-          Number
+        <label className="form-contacts__input">
+          Number:
           <input
+            className="form-contacts__text"
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -51,7 +54,9 @@ class ContactForm extends Component {
             autoComplete="off"
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button type="submit" className="form-contacts__button">
+          Add contact
+        </button>
       </form>
     );
   }
